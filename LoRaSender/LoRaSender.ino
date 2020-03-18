@@ -1,3 +1,8 @@
+/*------------------------------------------------------------------------------
+################################################################################
+###                                   Receiver                               ###
+################################################################################
+------------------------------------------------------------------------------*/
 #include "heltec.h"
 #include "Node.hpp"
 #include "Malicious_Node.hpp"
@@ -11,16 +16,16 @@ Malicious_Node myself;
 vector<uint8_t> ident{0x01,0x02};
 vector<vector<uint8_t>> pack;
 vector<uint8_t> to_send;
-void setup() 
+void setup()
 {
   Heltec.begin(true /*DisplayEnable Enable*/, true /*Heltec.LoRa Disable*/, true /*Serial Enable*/, true /*PABOOST Enable*/, BAND /*long BAND*/);
-  LoRa.setSpreadingFactor(7);  
+  LoRa.setSpreadingFactor(7);
   myself.AddFakeID(ident.at(0));
   myself.AddFakeID(ident.at(1));
-  pack=myself.Create_pack();
+  pack=myself.Create_pack();// Create packets with fake identities
 }
 
-void loop() 
+void loop()
 {
   for(i=0; i<20; i++)
   {
@@ -31,7 +36,7 @@ void loop()
       }
       else
       {
-        to_send=pack.at(1);     
+        to_send=pack.at(1);
       }
       t_message=to_send.at(0);
       IDE=to_send.at(1);
@@ -41,7 +46,7 @@ void loop()
       LoRa.setTxPower(14,RF_PACONFIG_PASELECT_PABOOST);
       LoRa.write(t_message);
       LoRa.write(IDE);
-      LoRa.endPacket();  
+      LoRa.endPacket();
   }
   delay(20000);
 
