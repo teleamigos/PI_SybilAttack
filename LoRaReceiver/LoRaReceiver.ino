@@ -1,26 +1,31 @@
+/*------------------------------------------------------------------------------
+################################################################################
+###                                   Receiver                               ###
+################################################################################
+------------------------------------------------------------------------------*/
 #include "heltec.h"
 #include "Node.hpp"
 #include "Receiver_Node.hpp"
-#define BAND    433E6 
+#define BAND    433E6
 vector<uint8_t> id;
 vector<float> rssi;
 int i=0;
 uint8_t IDE;
-Node this_node(0x05,0x00);
-Receiver_Node receiver(this_node);
-void setup() 
+Node this_node(0x05,0x00);//Create a Node with ID :5 and type of message :0
+Receiver_Node receiver(this_node);//Create a receiver, using a node created
+void setup()
 {
   Heltec.begin(true /*DisplayEnable Enable*/, true /*Heltec.LoRa Disable*/, true /*Serial Enable*/, true /*PABOOST Enable*/, BAND /*long BAND*/);
   LoRa.setSpreadingFactor(7);
 }
 
-void loop() 
+void loop()
 {
   int packetSize = LoRa.parsePacket();
-  if (packetSize) 
+  if (packetSize)
   {
     //Serial.print("Paquete recibido: ");
-    while (LoRa.available()) 
+    while (LoRa.available())
     {
       byte t_message = LoRa.read();
       //Serial.print("tipo de mensaje ");
@@ -28,7 +33,7 @@ void loop()
       IDE = LoRa.read();
       //Serial.print(" del identificador ");
       //Serial.println(IDE);
-      
+
     }
     //Serial.print("RSSI: ");
     float rssi_receiver = LoRa.packetRssi();
@@ -37,13 +42,13 @@ void loop()
     //Serial.print(" SNR: ");
     float SNR = LoRa.packetSnr();
     //Serial.println(SNR);
-    id.push_back(IDE);
-    rssi.push_back(rssi_receiver);
-    if(i==20)
+    id.push_back(IDE);//It storages an ID in a list
+    rssi.push_back(rssi_receiver);//It storages a RSSI in a list
+    if(i==20) // Only make this action for 20 messages
     {
-      receiver.SetIDList(id);
-      receiver.SetRSSIList(rssi);
-      receiver.Discard();
+      receiver.SetIDList(id); // Setting ID list in the receiver
+      receiver.SetRSSIList(rssi);// Setting RSSI list in the receiver
+      receiver.Discard(); //Calling to the algorithm "discard"
       id.clear();
       rssi.clear();
       i=0;
