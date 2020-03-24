@@ -13,6 +13,7 @@
 -----------------------------------------------------------------------------------------------------*/
 #include <string>
 #include <vector>
+#include <fstream>
 #include <iostream>
 #include "Node.hpp"
 
@@ -26,7 +27,7 @@ private:
     vector<uint8_t> ID_List;
     vector<float> RSSI_list;
     vector<float> NSR;
-    vector<vector<uint8_t>> ID_detected;
+    vector<uint8_t> detected;
 public:
     /*Constructors*/
     Receiver_Node()=default;
@@ -36,7 +37,7 @@ public:
     Node GetThisNode()const;
     vector<uint8_t> GetIDList()const;
     vector<float> GetRSSIList()const;
-    vector<vector<uint8_t>> GetID_detected()const;
+    vector<uint8_t> GetID_detected()const;
     /*Setters*/
     //void SetThisNode(Node nodo);
     void SetIDList(vector<uint8_t> ids);
@@ -47,6 +48,7 @@ public:
     void Discard();//Algortihm to disrcard bad nodes...
     void Print_ID_detected()const;
     void Clear_lists();
+    //void GenerateDoc(vector<uint8_t> id);
 };
 
 #endif /* Receiver_Node_hpp */

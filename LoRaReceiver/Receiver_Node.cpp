@@ -29,9 +29,9 @@ vector<float> Receiver_Node::GetRSSIList()const
 {
     return this->RSSI_list;
 }
-vector<vector<uint8_t>> Receiver_Node::GetID_detected()const
+vector<uint8_t> Receiver_Node::GetID_detected()const
 {
-    return this->ID_detected;
+    return this->detected;
 }
 /*Setters*/
 void Receiver_Node::SetIDList(vector<uint8_t> ids)
@@ -126,12 +126,26 @@ void Receiver_Node::Discard()
     //define distance
     if (r_error>this->range_tol.at(0))
     {
-        this->ID_detected.push_back(ids);
+            this->detected=ids;
     }
-    Clear_lists();
+
 }
+
 void Receiver_Node::Clear_lists()
 {
   this->ID_List.clear();
   this->RSSI_list.clear();
 }
+/*
+void Receiver_Node::GenerateDoc(vector<uint8_t> id)
+{
+    string *detected;
+    string iden;
+    int i;
+    for (i=0;i<id.size();i++)
+    {
+        detected =(string*)id.at(i);
+    }
+    
+}
+*/
