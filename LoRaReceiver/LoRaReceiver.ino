@@ -10,6 +10,7 @@
 vector<uint8_t> id;
 vector<float> rssi;
 int i=0;
+int j;
 uint8_t IDE;
 vector<uint8_t> detected;
 Node this_node(0x05,0x00);//Create a Node with ID :5 and type of message :0
@@ -51,6 +52,10 @@ void loop()
       receiver.SetRSSIList(rssi);// Setting RSSI list in the receiver
       receiver.Discard(); //Calling to the algorithm "discard"
       detected=receiver.GetID_detected();
+      for(j=0;j<detected.size();j++)
+      {
+        cout<<detected.at(i);
+      }
       id.clear();
       rssi.clear();
       i=0;
