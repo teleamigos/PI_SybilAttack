@@ -51,10 +51,20 @@ void loop()
       receiver.SetRSSIList(rssi);// Setting RSSI list in the receiver
       receiver.Discard(); //Calling to the algorithm "discard"
       detected=receiver.GetID_detected();
+
       id.clear();
       rssi.clear();
       i=0;
     }
     i++;
+  }
+}
+
+void Print(vector<uint8_t> detected)
+{
+  int i;
+  for (i=0;i<detected.size();i++)
+  {
+    cout<<((String*)detected.at(i))<<endl;
   }
 }
